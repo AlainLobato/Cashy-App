@@ -19,4 +19,8 @@ export class HeaderComponent  implements OnInit {
   dismissModal(){
     this.utilsSvc.dismissModal();
   }
+
+  loading(){
+    this.utilsSvc.loading();
+  }
 }

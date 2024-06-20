@@ -4,7 +4,7 @@
     <ion-buttons slot="start">
 
       <!--------BACK BUTTON-------->
-      <ion-back-button *ngIf="backButton" [defaultHref] = "backButton"></ion-back-button>
+      <ion-back-button text="" (click)="loading()" *ngIf="backButton" [defaultHref] = "backButton"></ion-back-button>
 
       <!--------CLOSE BUTTON-------->
       <ion-button *ngIf = "isModal" (click)="dismissModal()">
@@ -13,7 +13,7 @@
       
     </ion-buttons>
 
-    <ion-title class="ion-text-center">
+    <ion-title>
       <strong>{{title}}</strong>
       <div class="admin"></div>
     </ion-title>

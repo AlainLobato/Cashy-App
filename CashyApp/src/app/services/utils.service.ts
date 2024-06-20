@@ -38,4 +38,14 @@ export class UtilsService {
     return this.router.navigateByUrl(url);
   }
 
+  //------GUARDAR ELEMENTO EN LOCAL STORAGE-----------
+  saveInLocalStorage(key: string, value: any) {
+    return localStorage.setItem(key, JSON.stringify(value))
+  }
+
+  //-----OBTENER ELEMENTO DESDE LOCAL STORAGE---------
+  getFromLocalStorage(key: string) {
+    return JSON.parse(localStorage.getItem(key))
+  }
+
 }
