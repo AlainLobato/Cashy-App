@@ -1,0 +1,138 @@
+<app-header [isModal]="true" [title]="lend ? 'Actualizar prestamo' : 'Agregar prestamo'"></app-header>
+
+<ion-content>
+  <form [formGroup]="form" class="ion-padding ion-text-center" (ngSubmit)="submit()" (keypress.enter)="submit()">
+
+    <!------------NAME----------------->
+
+    <ion-item class="custom-input" lines="none">
+      <ion-icon slot="start" color="primary" name="text-outline"></ion-icon>
+
+      <ion-select mode="ios" label="Nombre" label-placement="floating" fill="outline" formControlName="nombre">
+        <ion-select-option *ngFor="let c of clients" [value]="c.nombre">{{c.nombre}}</ion-select-option>
+      </ion-select>
+
+    </ion-item>
+
+    <div class="validators" *ngIf="form.controls.nombre.errors && form.controls.nombre.touched">
+      <div *ngIf="form.controls.nombre.errors?.['required']">Nombre requerido</div>
+    </div>
+
+    <ion-item class="custom-input">
+      <ion-icon slot="start" color="primary" name="calendar-outline"></ion-icon>
+      Fecha Inicio
+      <ion-datetime-button slot="end" datetime="datetimeInicio"></ion-datetime-button>
+
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <app-header [isModal]="true" title="Fecha Inicio"></app-header>
+          <ion-datetime formControlName="fechaHoy" mode="ios" color="primary" id="datetimeInicio"
+            [showDefaultButtons]="true" presentation="date" doneText="Aceptar" cancelText="Cancelar" [formatOptions]="{
+            date: {
+              weekday: 'short',
+              month: 'long',
+              day: '2-digit',
+            }
+          }"></ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </ion-item>
+
+    <div class="validators" *ngIf="form.controls.fechaHoy.errors && form.controls.fechaHoy.touched">
+      <div *ngIf="form.controls.fechaHoy.errors?.['required']">Ingrese una fecha</div>
+    </div>
+
+    <ion-item class="custom-input">
+      <ion-icon slot="start" color="primary" name="calendar-outline"></ion-icon>
+      Fecha Fin
+      <ion-datetime-button slot="end" datetime="datetimeLimite"></ion-datetime-button>
+
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <app-header [isModal]="true" title="Fecha Limite"></app-header>
+          <ion-datetime formControlName="fechaLimite" mode="ios" color="primary" id="datetimeLimite"
+            [showDefaultButtons]="true" presentation="date" doneText="Aceptar" cancelText="Cancelar" [formatOptions]="{
+            date: {
+              weekday: 'short',
+              month: 'long',
+              day: '2-digit',
+            }
+          }"></ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </ion-item>
+
+    <div class="validators" *ngIf="form.controls.fechaLimite.errors && form.controls.fechaLimite.touched">
+      <div *ngIf="form.controls.fechaLimite.errors?.['required']">Ingrese una fecha</div>
+    </div>
+
+    <!------------CANTIDAD----------------->
+    <app-custom-input icon="cash-outline" autocomplete="money" [control]="form.controls.cantidad" type="number"
+      label="Prestamo" (ionInput)="setNumberInput()"></app-custom-input>
+
+    <div class="validators" *ngIf="form.controls.cantidad.errors && form.controls.cantidad.touched">
+      <div *ngIf="form.controls.cantidad.errors?.['required']">Cantidad requerida</div>
+      <div *ngIf="form.controls.cantidad.errors?.['min']">Cantidad invalida</div>
+    </div>
+
+    <ion-item class="custom-input">
+      <ion-icon slot="start" color="primary" name="podium-outline"></ion-icon>
+      <ion-select mode="ios" label="Tasa de interés" label-placement="floating" formControlName="tasa">
+        <ion-select-option value="1.0">1.0</ion-select-option>
+        <ion-select-option value="1.1">1.1</ion-select-option>
+        <ion-select-option value="1.2">1.2</ion-select-option>
+        <ion-select-option value="1.3">1.3</ion-select-option>
+        <ion-select-option value="1.4">1.4</ion-select-option>
+        <ion-select-option value="1.5">1.5</ion-select-option>
+        <ion-select-option value="1.6">1.6</ion-select-option>
+        <ion-select-option value="1.7">1.7</ion-select-option>
+        <ion-select-option value="1.8">1.8</ion-select-option>
+        <ion-select-option value="1.9">1.9</ion-select-option>
+        <ion-select-option value="2.0">2.0</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <div class="validators" *ngIf="form.controls.tasa.errors && form.controls.tasa.touched">
+      <div *ngIf="form.controls.tasa.errors?.['required']">Ingresa una tasa de interés</div>
+    </div>
+
+    <ion-item class="custom-input">
+      <ion-icon slot="start" color="primary" name="hourglass-outline"></ion-icon>
+      <ion-select mode="ios" label="Vigencia del abono" label-placement="floating" formControlName="tipo">
+        <ion-select-option value="Quincenal">Quincenal</ion-select-option>
+        <ion-select-option value="Semanal">Semanal</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <div class="validators" *ngIf="form.controls.tipo.errors && form.controls.tipo.touched">
+      <div *ngIf="form.controls.tipo.errors?.['required']">Ingresa una vigencia</div>
+    </div>
+
+    <!------------ABONOS----------------->
+    <app-custom-input icon="wallet-outline" autocomplete="money" [control]="form.controls.abonos" type="number"
+      label="Pagos" (ionInput)="setNumberInput()"></app-custom-input>
+
+    <div class="validators" *ngIf="form.controls.abonos.errors && form.controls.abonos.touched">
+      <div *ngIf="form.controls.abonos.errors?.['required']">Cantidad de abonos requerida</div>
+      <div *ngIf="form.controls.abonos.errors?.['min']">Numero de abonos invalida</div>
+    </div>
+
+    <!------------MULTAS----------------->
+    <app-custom-input icon="alarm-outline" autocomplete="money" [control]="form.controls.multas" type="number"
+      label="Multas" (ionInput)="setNumberInput()"></app-custom-input>
+
+    <div class="validators" *ngIf="form.controls.multas.errors && form.controls.multas.touched">
+      <div *ngIf="form.controls.multas.errors?.['required']">Cantidad de multas requerida</div>
+      <div *ngIf="form.controls.multas.errors?.['min']">Numero de multas invalida</div>
+    </div>
+
+    <app-custom-input [control]="form.controls.notas" type="textarea" label="Notas"></app-custom-input>
+
+
+    <ion-button type="submit" mode="ios" class="ion-margin" [disabled]="form.invalid">
+      {{lend ? 'Actualizar prestamo' : 'Agregar prestamo'}}
+      <ion-icon slot="end" name="person-add-outline"></ion-icon>
+    </ion-button>
+  </form>
+
+</ion-content>

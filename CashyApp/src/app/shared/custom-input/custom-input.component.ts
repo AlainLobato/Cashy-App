@@ -30,4 +30,5 @@ export class CustomInputComponent  implements OnInit {
     if(this.hide == true) this.type = "password";
     else this.type = "text";
   }
+
 }

@@ -1,0 +1,43 @@
+<app-header [isModal]="true" [title]="client ? 'Actualizar datos' : 'Agregar cliente'"></app-header>
+
+<ion-content>
+    <form [formGroup]="form" class="ion-padding ion-text-center" (ngSubmit)="submit()" (keypress.enter)="submit()">
+
+        <!------------NAME----------------->
+        <app-custom-input icon="text-outline" autocomplete="name" [control]="form.controls.nombre" type="text"
+            label="Nombre"></app-custom-input>
+
+        <div class="validators" *ngIf="form.controls.nombre.errors && form.controls.nombre.touched">
+            <div *ngIf="form.controls.nombre.errors?.['required']">Nombre required</div>
+            <div *ngIf="form.controls.nombre.errors?.['minLenght']">Nombre shortest</div>
+        </div>
+
+        <br>
+
+        <!-----TAKE PHOTO/SELECT IMAGE----->
+        <ion-button expand="block" (click)="optionsToSelectImage(1)" mode="ios" color="secondary" shape="round">
+            <ion-icon slot="start" name="card-outline"></ion-icon>
+            {{client ? 'Actualizar INE' : 'Agregar INE'}}
+        </ion-button>
+
+        <ion-img *ngIf="form.value.ine" [src]="form.value.ine"></ion-img>
+        <ion-icon *ngIf="!form.value.ine" class="image-icon" name="image-outline"></ion-icon>
+
+
+        <ion-button expand="block" (click)="optionsToSelectImage(2)" mode="ios" color="secondary" shape="round">
+            <ion-icon slot="start" name="document-text-outline"></ion-icon>
+            {{client ? 'Actualizar comprobante' : 'Agregar comprobante'}}
+        </ion-button>
+
+        <ion-img *ngIf="form.value.comprobanteDomicilio" [src]="form.value.comprobanteDomicilio"></ion-img>
+        <ion-icon *ngIf="!form.value.comprobanteDomicilio" class="image-icon" name="image-outline"></ion-icon>
+
+        <br>
+
+        <ion-button type="submit" mode="ios" class="ion-margin" [disabled]="form.invalid">
+            {{client ? 'Actualizar datos' : 'Agregar cliente'}}
+            <ion-icon slot="end" name="person-add-outline"></ion-icon>
+        </ion-button>
+    </form>
+    
+</ion-content>

@@ -1,0 +1,55 @@
+<app-header title="Clientes"></app-header>
+<ion-content>
+
+  <!-------SEEN OBJECT------->
+  <ion-list>
+    <ion-item-sliding class="product-item" *ngFor="let c of clients">
+
+      <ion-item-options side="start">
+        <ion-item-option expandable (click)="addUpdateClient(c)">
+          <ion-icon class="option-btn" name="create-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+
+      <ion-item (click)="showClientDetails(c)">
+
+        <ion-avatar *ngIf="c.ine" slot="start">
+          <img [src]="c.ine" />
+        </ion-avatar>
+        <ion-avatar *ngIf="!c.ine" slot="start">
+          <ion-icon class="icon-avatar" name="image-outline"></ion-icon>
+        </ion-avatar>
+
+        <ion-label class="object">
+          <div class="name">{{c.nombre}}</div>
+        </ion-label>
+      </ion-item>
+
+      <ion-item-options>
+        <ion-item-option color="danger" expandable (click)="corfirmDeleteClient(c)">
+          <ion-icon class="option-btn" name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+
+
+    </ion-item-sliding>
+  </ion-list>
+
+  <div class="empty" *ngIf="!clients.length">
+    <ion-icon name="pencil-outline"></ion-icon>
+    <h3>No ha registrado clientes</h3>
+  </div>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button (click)="addUpdateClient()">
+        <ion-icon name="document-attach-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+</ion-content>
+<app-footer></app-footer>

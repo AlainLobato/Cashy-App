@@ -1,0 +1,74 @@
+<app-header [isModal]="true" title="Historial"></app-header>
+
+<ion-content>
+
+  <div class="client">
+    <p><b>{{client.nombre}}</b></p>
+    <p class="historial">Historial de prestamos:</p>
+  </div>
+
+  <ion-list *ngFor="let l of lend">
+    <ion-item-sliding class="product-item">
+
+      <div *ngIf="lend">
+        <ion-item>
+          <ion-label class="object">
+
+            <ion-chip class="data" *ngIf="l.pagado" color="success">
+              <ion-label>
+                <b>Pagado</b>
+              </ion-label>
+            </ion-chip>
+
+            <ion-chip class="data" *ngIf="!l.pagado" color="danger">
+              <ion-label>
+                <b>Pendiente</b>
+              </ion-label>
+            </ion-chip>
+
+            <div class="name">Fecha de prestamo: {{l.fechaHoy | date:'dd/MM/YYYY' }}</div>
+
+            <div class="data">
+              <strong *ngIf="l.pagado">Total pagado: </strong>
+              <strong *ngIf="!l.pagado">Total a pagar</strong>
+              {{l.total | currency: 'MXN '}}
+              <br>
+              <strong>Interes por cada $1000: </strong> {{(l.tasa * 1000) - 1000 | currency: 'MXN '}}
+              <br>
+              <strong>Prestamo: </strong> {{l.cantidad | currency: 'MXN '}}
+              <br>
+              <strong *ngIf="!l.pagado">Pagos: {{l.abonos}} </strong>
+            </div>
+
+            <div class="name">Fecha de liquidacion: {{l.fechaLimite | date:'dd/MM/YYYY' }}</div>
+
+            <div *ngIf="!l.pagado">
+              <ion-chip color="success" mode="ios" outline="true">
+                <ion-label>
+                  <b>
+                    Pendiente: {{l.total - (l.abono * l.abonos)| currency: 'MXN '}}
+                  </b>
+                </ion-label>
+              </ion-chip>
+
+              <ion-chip color="danger" mode="ios" outline="true">
+                <ion-label>
+                  <b>
+                    Multa: {{(l.multas * 30) | currency: 'MXN '}}
+                  </b>
+                </ion-label>
+              </ion-chip>
+
+            </div>
+          </ion-label>
+        </ion-item>
+      </div>
+    </ion-item-sliding>
+  </ion-list>
+
+  <div *ngIf="!lend.length" class="empty">
+    <ion-icon name="file-tray-outline"></ion-icon>
+    <h3>Aún no tiene historial</h3>
+  </div>
+
+</ion-content>

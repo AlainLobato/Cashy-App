@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
@@ -11,4 +12,9 @@ export class FooterComponent  implements OnInit {
 
   ngOnInit() {}
 
+  router = inject(Router);
+
+  routerlink(url: string){
+    this.router.navigateByUrl(url);
+  }
 }

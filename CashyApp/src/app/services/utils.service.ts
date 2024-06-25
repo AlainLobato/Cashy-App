@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { LoadingController, ModalController, ToastController, ToastOptions } from '@ionic/angular';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { AlertController, AlertOptions, LoadingController, ModalController, ModalOptions, ToastController, ToastOptions } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,20 @@ export class UtilsService {
   loadingCtrl = inject(LoadingController)
   toastCtrl = inject(ToastController)
   router = inject(Router)
+  alertCtrl = inject(AlertController)
 
-  //--------MODAL-----------
+
+  //-----------MODAL----------
+  async presentModal(opts: ModalOptions) {
+    const modal = await this.modalCtrl.create(opts);
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      return data;
+    }
+  }
+
   dismissModal(data?: any) {
     return this.modalCtrl.dismiss(data);
   }
@@ -48,4 +61,30 @@ export class UtilsService {
     return JSON.parse(localStorage.getItem(key))
   }
 
+  //------TAKE PICTURE-------
+  async takePicture (){
+    return await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Camera
+    });
+  };
+
+  //------SELECT IMAGE--------
+  async selectPicture (){
+    return await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Photos
+    });
+  };
+
+  //--------------ALERT--------------------
+  async presentAlert(opts?: AlertOptions) {
+    const alert = await this.alertCtrl.create(opts);
+  
+    await alert.present();
+  }
 }
