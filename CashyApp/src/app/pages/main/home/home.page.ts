@@ -139,7 +139,7 @@ export class HomePage implements OnInit {
 
       this.utilsSvc.presentToast({
         message: 'Prestamo eliminado',
-        duration: 4000,
+        duration: 2000,
         color: 'success',
         position: 'bottom',
         icon: 'checkmark-done-outline'
@@ -151,7 +151,7 @@ export class HomePage implements OnInit {
 
       this.utilsSvc.presentToast({
         message: '  Error: No se pudo eliminar el prestamo',
-        duration: 4000,
+        duration: 2000,
         color: 'danger',
         position: 'bottom',
         icon: 'alert-circle-outline'
@@ -165,9 +165,9 @@ export class HomePage implements OnInit {
 
   async corfirmDeleteLend(lend: lend) {
     this.utilsSvc.presentAlert({
-      header: 'Eliminar cliente',
+      header: 'Eliminar prestamo',
       mode: 'md',
-      message: 'Deseas eliminar el cliente?',
+      message: 'Deseas eliminar el prestamo?',
       buttons: [
         {
           text: 'Cancelar'

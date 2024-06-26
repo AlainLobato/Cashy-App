@@ -131,7 +131,7 @@ export class AddClientComponent  implements OnInit {
 
       this.utilsSvc.presentToast({
         message: 'Cliente registrado',
-        duration: 4000,
+        duration: 2000,
         color: 'success',
         position: 'bottom',
         icon: 'checkmark-done-outline'
@@ -143,7 +143,7 @@ export class AddClientComponent  implements OnInit {
 
       this.utilsSvc.presentToast({
         message: 'Error: Cliente no registrado',
-        duration: 4000,
+        duration: 2000,
         color: 'danger',
         position: 'bottom',
         icon: 'alert-circle-outline'
@@ -188,7 +188,7 @@ export class AddClientComponent  implements OnInit {
 
       this.utilsSvc.presentToast({
         message: 'Datos actualizados',
-        duration: 4000,
+        duration: 2000,
         color: 'success',
         position: 'bottom',
         icon: 'checkmark-done-outline'
@@ -200,7 +200,7 @@ export class AddClientComponent  implements OnInit {
 
       this.utilsSvc.presentToast({
         message: 'Error: Datos no actualizados',
-        duration: 4000,
+        duration: 2000,
         color: 'danger',
         position: 'bottom',
         icon: 'alert-circle-outline'

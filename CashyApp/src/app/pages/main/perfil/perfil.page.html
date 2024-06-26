@@ -1,14 +1,30 @@
 <app-header title="Perfil"></app-header>
-<ion-content>
-    
-            <ion-button (click)="confirmSupport()" color="secondary" expand="block">
-                <ion-icon slot="start" name="construct-outline"></ion-icon>
-                Contactar a soporte
-            </ion-button>
-            <ion-button (click)="confirmSignOut()" color="secondary" expand="block">
-                <ion-icon slot="start" name="log-in-outline"></ion-icon>
-                Cerrar sesion
-            </ion-button>
-            
+<ion-content class="ion-padding-top ion-text-center">
+
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <ion-avatar>
+        <img *ngIf="User()?.image" [src]="User()?.image" />
+
+        <ion-icon *ngIf="!User()?.image" class="empty-icon" name="person-circle-outline"></ion-icon>
+    </ion-avatar>
+
+    <ion-button class="photo-btn" mode="ios" size="small" shape="round">
+        <ion-icon name="camera-outline"></ion-icon>
+    </ion-button>
+
+    <h2>{{User().name}}</h2>
+
+    <ion-button (click)="confirmSupport()" color="secondary" expand="block">
+        <ion-icon slot="start" name="construct-outline"></ion-icon>
+        Contactar a soporte
+    </ion-button>
+    <ion-button botton detail (click)="confirmSignOut()" color="secondary" expand="block">
+        <ion-icon slot="start" name="log-in-outline"></ion-icon>
+        Cerrar sesion
+    </ion-button>
+
 </ion-content>
 <app-footer></app-footer>

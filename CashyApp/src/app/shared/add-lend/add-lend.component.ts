@@ -162,7 +162,7 @@ export class AddLendComponent implements OnInit {
 
       this.utilsSvc.presentToast({
         message: 'Prestamo registrado',
-        duration: 4000,
+        duration: 2000,
         color: 'success',
         position: 'bottom',
         icon: 'checkmark-done-outline'
@@ -174,7 +174,7 @@ export class AddLendComponent implements OnInit {
 
       this.utilsSvc.presentToast({
         message: 'Error: Prestamo no registrado',
-        duration: 4000,
+        duration: 2000,
         color: 'danger',
         position: 'bottom',
         icon: 'alert-circle-outline'
@@ -214,7 +214,7 @@ export class AddLendComponent implements OnInit {
 
       this.utilsSvc.presentToast({
         message: 'Prestamo actualizado',
-        duration: 4000,
+        duration: 2000,
         color: 'success',
         position: 'bottom',
         icon: 'checkmark-done-outline'
@@ -226,7 +226,7 @@ export class AddLendComponent implements OnInit {
 
       this.utilsSvc.presentToast({
         message: 'Error: Prestamo no actualizado',
-        duration: 4000,
+        duration: 2000,
         color: 'danger',
         position: 'bottom',
         icon: 'alert-circle-outline'

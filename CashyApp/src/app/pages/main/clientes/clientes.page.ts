@@ -87,7 +87,7 @@ export class ClientesPage implements OnInit {
 
       this.utilsSvc.presentToast({
         message: 'Cliente eliminado',
-        duration: 4000,
+        duration: 2000,
         color: 'success',
         position: 'bottom',
         icon: 'checkmark-done-outline'
@@ -99,7 +99,7 @@ export class ClientesPage implements OnInit {
 
       this.utilsSvc.presentToast({
         message: '  Error: No se pudo eliminar el cliente',
-        duration: 4000,
+        duration: 2000,
         color: 'danger',
         position: 'bottom',
         icon: 'alert-circle-outline'
@@ -135,6 +135,21 @@ export class ClientesPage implements OnInit {
       cssClass: 'add-update-modal',
       componentProps: {client}
     }) 
+  }
+
+  doRefresh(event?: any) {
+    setTimeout(() => {
+      this.getClients();
+
+      console.log(event)
+      
+      if(event != undefined){
+        if (!event.isTrusted) {
+          event.target.complete();
+        }
+      }
+
+    }, 2000);
   }
 
 }

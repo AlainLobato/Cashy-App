@@ -64,10 +64,25 @@ export class PerfilPage implements OnInit {
   }
 
   support(){
-    const href = 'https://wa.me/528127713406?text=Hola, tengo un problema con la app, me puedes ayudar?';
+    const href = 'https://wa.me/528127713406?text=Hola, tengo un problema con la app.';
     window.location.href = href;
   }
 
+  User(): user{
+    return this.utilsSvc.getFromLocalStorage('user');
+  }
 
+  doRefresh(event?: any) {
+    setTimeout(() => {
+      console.log(event)
+      
+      if(event != undefined){
+        if (!event.isTrusted) {
+          event.target.complete();
+        }
+      }
+
+    }, 2000);
+  }
 
 }

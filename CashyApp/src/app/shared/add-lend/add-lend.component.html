@@ -1,7 +1,7 @@
 <app-header [isModal]="true" [title]="lend ? 'Actualizar prestamo' : 'Agregar prestamo'"></app-header>
 
 <ion-content>
-  <form [formGroup]="form" class="ion-padding ion-text-center" (ngSubmit)="submit()" (keypress.enter)="submit()">
+  <form [formGroup]="form" *ngIf="form" class="ion-padding ion-text-center" (ngSubmit)="submit()" (keypress.enter)="submit()">
 
     <!------------NAME----------------->
 
@@ -20,23 +20,26 @@
 
     <ion-item class="custom-input">
       <ion-icon slot="start" color="primary" name="calendar-outline"></ion-icon>
-      Fecha Inicio
+      Inicio
       <ion-datetime-button slot="end" datetime="datetimeInicio"></ion-datetime-button>
-
+    
       <ion-modal [keepContentsMounted]="true">
         <ng-template>
-          <app-header [isModal]="true" title="Fecha Inicio"></app-header>
-          <ion-datetime formControlName="fechaHoy" mode="ios" color="primary" id="datetimeInicio"
-            [showDefaultButtons]="true" presentation="date" doneText="Aceptar" cancelText="Cancelar" [formatOptions]="{
-            date: {
-              weekday: 'short',
-              month: 'long',
-              day: '2-digit',
-            }
-          }"></ion-datetime>
+          <app-header [isModal]="true" title="Fecha de Inicio"></app-header>
+          <ion-datetime *ngIf="form" formControlName="fechaHoy" mode="ios" color="primary" id="datetimeInicio"
+            [showDefaultButtons]="true" presentation="date" doneText="Aceptar" cancelText="Cancelar" 
+            [formatOptions]="{
+              date: {
+                weekday: 'short',
+                month: 'long',
+                day: '2-digit',
+              }
+            }">
+          </ion-datetime>
         </ng-template>
       </ion-modal>
     </ion-item>
+    
 
     <div class="validators" *ngIf="form.controls.fechaHoy.errors && form.controls.fechaHoy.touched">
       <div *ngIf="form.controls.fechaHoy.errors?.['required']">Ingrese una fecha</div>
@@ -44,14 +47,15 @@
 
     <ion-item class="custom-input">
       <ion-icon slot="start" color="primary" name="calendar-outline"></ion-icon>
-      Fecha Fin
+      Liquidacion
       <ion-datetime-button slot="end" datetime="datetimeLimite"></ion-datetime-button>
 
       <ion-modal [keepContentsMounted]="true">
         <ng-template>
-          <app-header [isModal]="true" title="Fecha Limite"></app-header>
-          <ion-datetime formControlName="fechaLimite" mode="ios" color="primary" id="datetimeLimite"
-            [showDefaultButtons]="true" presentation="date" doneText="Aceptar" cancelText="Cancelar" [formatOptions]="{
+          <app-header [isModal]="true" title="Fecha de Liquidacion"></app-header>
+          <ion-datetime *ngIf="form" formControlName="fechaLimite" mode="ios" color="primary" id="datetimeLimite"
+            [showDefaultButtons]="true" presentation="date" doneText="Aceptar" cancelText="Cancelar" 
+            [formatOptions]="{
             date: {
               weekday: 'short',
               month: 'long',
@@ -98,14 +102,14 @@
 
     <ion-item class="custom-input">
       <ion-icon slot="start" color="primary" name="hourglass-outline"></ion-icon>
-      <ion-select mode="ios" label="Vigencia del abono" label-placement="floating" formControlName="tipo">
+      <ion-select mode="ios" label="Tipo de pago" label-placement="floating" formControlName="tipo">
         <ion-select-option value="Quincenal">Quincenal</ion-select-option>
         <ion-select-option value="Semanal">Semanal</ion-select-option>
       </ion-select>
     </ion-item>
 
     <div class="validators" *ngIf="form.controls.tipo.errors && form.controls.tipo.touched">
-      <div *ngIf="form.controls.tipo.errors?.['required']">Ingresa una vigencia</div>
+      <div *ngIf="form.controls.tipo.errors?.['required']">Ingresa una tipo de pago</div>
     </div>
 
     <!------------ABONOS----------------->
