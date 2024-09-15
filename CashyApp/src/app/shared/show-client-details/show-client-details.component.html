@@ -33,14 +33,14 @@
               <strong *ngIf="!l.pagado">Total a pagar</strong>
               {{l.total | currency: 'MXN '}}
               <br>
-              <strong>Interes por cada $1000: </strong> {{(l.tasa * 1000) - 1000 | currency: 'MXN '}}
+              <strong>Tasa: </strong> {{l.tasa}}
               <br>
               <strong>Prestamo: </strong> {{l.cantidad | currency: 'MXN '}}
               <br>
               <strong *ngIf="!l.pagado">Pagos: {{l.abonos}} </strong>
             </div>
 
-            <div class="name">Fecha de liquidacion: {{l.fechaLimite | date:'dd/MM/YYYY' }}</div>
+            <div *ngIf="l.fechaLimite" class="name">Fecha de liquidacion: {{l.fechaLimite | date:'dd/MM/YYYY' }}</div>
 
             <div *ngIf="!l.pagado">
               <ion-chip color="success" mode="ios" outline="true">

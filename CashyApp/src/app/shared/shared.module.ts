@@ -9,6 +9,7 @@ import { FooterComponent } from './footer/footer.component';
 import { AddClientComponent } from './add-client/add-client.component';
 import { AddLendComponent } from './add-lend/add-lend.component';
 import { ShowClientDetailsComponent } from './show-client-details/show-client-details.component';
+import { ViewLendComponent } from './view-lend/view-lend.component';
 
 
 
@@ -20,6 +21,7 @@ import { ShowClientDetailsComponent } from './show-client-details/show-client-de
     FooterComponent,
     AddClientComponent,
     AddLendComponent,
+    ViewLendComponent,
     ShowClientDetailsComponent
   ],
   exports: [
@@ -30,6 +32,7 @@ import { ShowClientDetailsComponent } from './show-client-details/show-client-de
     FooterComponent,
     AddClientComponent,
     AddLendComponent,
+    ViewLendComponent,
     ShowClientDetailsComponent
   ],
   imports: [

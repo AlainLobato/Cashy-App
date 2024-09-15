@@ -55,7 +55,6 @@ export class ClientesPage implements OnInit {
 
     let sub = this.firebaseSvc.getCollectionData(path, query).subscribe({
       next: (res: any) =>{
-        console.log(res);
         this.clients = res;
         sub.unsubscribe;
       }

@@ -1,0 +1,44 @@
+<app-header [isModal]="true" title="Historial del prestamo"></app-header>
+
+<ion-content>
+
+  <div class="client">
+    <p><b>{{lend.nombre}}</b></p>
+  </div>
+
+  <ion-button (click)="confirmAddPayment(lend)" type="submit" mode="ios" class="ion-margin" expand="block">
+    Agregar pago
+    <ion-icon name="arrow-up-circle-outline" slot="end"></ion-icon>
+  </ion-button>
+
+  <div class="content">
+    <p><b>Inicio del prestamo: </b> {{lend.fechaHoy | date:'dd/MM/YYYY' }}</p>
+    <p><b>Prestamo: </b>{{lend.cantidad | currency: 'MXN'}}</p>
+    <p><b>Abono: </b>{{lend.abono | currency: 'MXN'}}</p>
+    <p><b>Tipo de pago: </b>{{lend.tipo}}</p>
+    <p><b>Interes por cada $1000: </b> {{1000*(lend.tasa - 1) | currency: 'MXN '}}</p>
+
+    <p><b>Notas: </b>{{lend.notas}}</p>
+  </div>
+
+  <ion-button (click)="confirmAddBill(lend)" type="submit" mode="ios" class="ion-margin" expand="block">
+    Agregar multa
+    <ion-icon name="megaphone-outline" slot="end"></ion-icon>
+  </ion-button>
+
+  <ion-button (click)="confirmDeleteBill(lend)" type="submit" mode="ios" class="ion-margin" expand="block" color="danger">
+    Quitar multa
+    <ion-icon name="close-outline" slot="end"></ion-icon>
+  </ion-button>
+
+  <div class="pagos" *ngFor="let py of lend.fechaPagos">
+    <p>
+      <ion-icon name="checkmark-circle" color="success"></ion-icon>
+      <b>
+      Pago realizado: 
+      </b>{{py | date:'dd/MM/YYYY'}}
+    </p>
+  </div>
+
+
+</ion-content>

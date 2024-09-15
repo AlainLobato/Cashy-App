@@ -45,31 +45,6 @@
       <div *ngIf="form.controls.fechaHoy.errors?.['required']">Ingrese una fecha</div>
     </div>
 
-    <ion-item class="custom-input">
-      <ion-icon slot="start" color="primary" name="calendar-outline"></ion-icon>
-      Liquidacion
-      <ion-datetime-button slot="end" datetime="datetimeLimite"></ion-datetime-button>
-
-      <ion-modal [keepContentsMounted]="true">
-        <ng-template>
-          <app-header [isModal]="true" title="Fecha de Liquidacion"></app-header>
-          <ion-datetime *ngIf="form" formControlName="fechaLimite" mode="ios" color="primary" id="datetimeLimite"
-            [showDefaultButtons]="true" presentation="date" doneText="Aceptar" cancelText="Cancelar" 
-            [formatOptions]="{
-            date: {
-              weekday: 'short',
-              month: 'long',
-              day: '2-digit',
-            }
-          }"></ion-datetime>
-        </ng-template>
-      </ion-modal>
-    </ion-item>
-
-    <div class="validators" *ngIf="form.controls.fechaLimite.errors && form.controls.fechaLimite.touched">
-      <div *ngIf="form.controls.fechaLimite.errors?.['required']">Ingrese una fecha</div>
-    </div>
-
     <!------------CANTIDAD----------------->
     <app-custom-input icon="cash-outline" autocomplete="money" [control]="form.controls.cantidad" type="number"
       label="Prestamo" (ionInput)="setNumberInput()"></app-custom-input>

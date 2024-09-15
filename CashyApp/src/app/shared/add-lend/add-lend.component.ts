@@ -1,3 +1,4 @@
+import { ɵNullViewportScroller } from '@angular/common';
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActionSheetController } from '@ionic/angular';
@@ -30,7 +31,7 @@ export class AddLendComponent implements OnInit {
     id: new FormControl(''),
     nombre: new FormControl("", [Validators.required]),
     fechaHoy: new FormControl(null, [Validators.required]),
-    fechaLimite: new FormControl(null, [Validators.required]),
+    fechaLimite: new FormControl(null),
     cantidad: new FormControl(null, [Validators.required, Validators.min(0)]),
     tasa: new FormControl(null, [Validators.required, Validators.min(0)]),
     abonos: new FormControl(null, [Validators.required, Validators.min(0)]),
@@ -41,6 +42,7 @@ export class AddLendComponent implements OnInit {
     pagado: new FormControl(false),
     total: new FormControl(null),
     abono: new FormControl(null),
+    fechaPagos: new FormControl([]),
   });
 
   ngOnInit() {
@@ -71,7 +73,6 @@ export class AddLendComponent implements OnInit {
 
     let sub = this.firebaseSvc.getCollectionData(path, query).subscribe({
       next: (res: any) => {
-        console.log(res);
         this.clients = res;
         for (let c of this.clients) {
           let path = `users/${this.user.uid}/clientes/${c.id}/prestamos`;
@@ -205,8 +206,25 @@ export class AddLendComponent implements OnInit {
     if ((this.lend.total - (this.form.value.abono * this.form.value.abonos)) == 0) {
 
       this.form.value.pagado = true;
+      const date = new Date().getTime().toString();
+
+      this.form.value.fechaLimite = date
     }
 
+    if (this.form.value.tipo == 'Semanal' && this.form.value.abonos > 10 ||
+      this.form.value.tipo == 'Quincenal' && this.form.value.abonos > 5) {
+
+      this.utilsSvc.presentToast({
+        message: 'Error: Los abonos exceden el prestamo',
+        duration: 2000,
+        color: 'danger',
+        position: 'bottom',
+        icon: 'alert-circle-outline'
+      })
+
+      this.utilsSvc.dismissModal({ success: true });
+      return;
+    }
 
     this.firebaseSvc.updateDocument(path, this.form.value).then(async res => {
 

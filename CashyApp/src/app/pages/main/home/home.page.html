@@ -9,7 +9,7 @@
     
 
     <!-------SEEN OBJECT------->
-    <ion-list *ngFor="let p of lends">
+    <ion-list *ngFor="let p of showLends">
         <ion-item-sliding class="product-item">
 
             <div *ngIf="!p.pagado || p.multas > 0">
@@ -19,7 +19,7 @@
                     </ion-item-option>
                 </ion-item-options>
 
-                <ion-item (click)="addUpdateLend(p)">
+                <ion-item (click)="viewLend(p)">
                     <ion-label class="object">
                         <div class="name">{{p.nombre}}</div>
                         <div class="data">
@@ -56,9 +56,9 @@
         </ion-item-sliding>
     </ion-list>
 
-    <div *ngIf = "!aux.length" class="empty">
+    <div *ngIf = "!aux.length || !showLends.length" class="empty">
         <ion-icon name="build-outline"></ion-icon>
-        <h3>Oops! No hay resultados</h3>
+        <h3>Oops! No hay prestamos aún</h3>
     </div>
 
 

@@ -6,6 +6,7 @@ import { user } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { AddLendComponent } from 'src/app/shared/add-lend/add-lend.component';
+import { ViewLendComponent } from 'src/app/shared/view-lend/view-lend.component';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +27,7 @@ export class HomePage implements OnInit {
   clients: client[] = [];
   results: client[] = [];
   aux: client[] = [];
+  showLends: lend[] = [];
 
   user(): user{
     return this.utilsSvc.getFromLocalStorage('user');
@@ -44,11 +46,21 @@ export class HomePage implements OnInit {
     }
   }
 
+  async viewLend(lend?: any){
+    let success = await this.utilsSvc.presentModal({
+      component: ViewLendComponent,
+      cssClass: 'add-update-modal',
+      componentProps: {lend}
+    }) 
+
+    if(success){
+      this.ionViewWillEnter();
+    }
+  }
+
   doRefresh(event?: any) {
     setTimeout(() => {
       this.getLends();
-
-      console.log(event)
       
       if(event != undefined){
         if (!event.isTrusted) {
@@ -85,7 +97,6 @@ export class HomePage implements OnInit {
       return new Promise<void>((resolve, reject) => {
         let sub = this.firebaseSvc.getCollectionData(path, query).subscribe({
           next: (res: any) =>{
-            console.log(res);
             
             if(search){
               this.clients = search
@@ -107,19 +118,22 @@ export class HomePage implements OnInit {
 
   //------GET PRODUCTS IN HOME-----
   getLends(){
-      this.lends = [];
+      this.showLends = [];
   
       for (let c of this.clients) {
         let path = `users/${this.user().uid}/clientes/${c.id}/prestamos`;
-  
+      
         let query = (
           orderBy('nombre', 'desc')
         )
-  
+      
         let sub = this.firebaseSvc.getCollectionData(path, query).subscribe({
           next: (res: any) =>{
-            this.lends.push(...res);
-            sub.unsubscribe;
+            this.lends = res;
+            this.lends.filter(len => len.pagado == false || len.multas > 0).map(l => {
+              this.showLends.push(l)
+            });
+            sub.unsubscribe();
           }
         })
       }

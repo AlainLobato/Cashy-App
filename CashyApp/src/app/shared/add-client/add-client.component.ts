@@ -111,15 +111,15 @@ export class AddClientComponent  implements OnInit {
 
     if (this.form.value.ine != "") {
       let dataUrlINE = this.form.value.ine;
-      let imagePathINE = `${this.user.uid}/${Date.now()}`;
-      let imageUrlINE = await this.firebaseSvc.uploadImage(imagePathINE, dataUrlINE);
+      let imagePathINE = `/${this.user.uid}/${Date.now()}`;
+      let imageUrlINE = await this.uploadImage(imagePathINE, dataUrlINE, path);
       this.form.controls.ine.setValue(imageUrlINE);
     }
     
     if (this.form.value.comprobanteDomicilio != "") {
       let dataUrlCD = this.form.value.comprobanteDomicilio;
-      let imagePathCD = `${this.user.uid}/${Date.now() + 1}`;
-      let imageUrlCD = await this.firebaseSvc.uploadImage(imagePathCD, dataUrlCD);
+      let imagePathCD = `/${this.user.uid}/${Date.now() + 1}`;
+      let imageUrlCD = await this.uploadImage(imagePathCD, dataUrlCD, path);
       this.form.controls.comprobanteDomicilio.setValue(imageUrlCD);
     }
 
@@ -165,18 +165,16 @@ export class AddClientComponent  implements OnInit {
     //------UPLOAD IMAGEN GET URL------
 
     if (this.form.value.ine !== this.client.ine) {
-
       let dataUrl = this.form.value.ine;
       let imagePath = await this.firebaseSvc.getFilePath(this.client.ine);
-      let imageUrl = await this.firebaseSvc.uploadImage(imagePath, dataUrl);
+      let imageUrl = await this.uploadImage(imagePath, dataUrl);
       this.form.controls.ine.setValue(imageUrl);
     }
 
     if (this.form.value.comprobanteDomicilio !== this.client.comprobanteDomicilio) {
-
       let dataUrl = this.form.value.comprobanteDomicilio;
       let imagePath = await this.firebaseSvc.getFilePath(this.client.comprobanteDomicilio);
-      let imageUrl = await this.firebaseSvc.uploadImage(imagePath, dataUrl);
+      let imageUrl = await this.uploadImage(imagePath, dataUrl);
       this.form.controls.comprobanteDomicilio.setValue(imageUrl);
     }
 
@@ -210,5 +208,31 @@ export class AddClientComponent  implements OnInit {
       loading.dismiss();
     })
   }
+
+  
+  async uploadImage(imagePath: string, dataUrl: string, path?: string,): Promise<string> {
+    let storageRef;
+    let imageRef;
+    
+    if (path) {
+      storageRef = this.firebaseSvc.storage.ref(path);
+      imageRef = storageRef.child(imagePath);
+    }else{
+      storageRef = this.firebaseSvc.storage.ref('');
+      imageRef = storageRef.child(imagePath);
+    }
+
+
+    
+    try {
+      const snapshot = await imageRef.putString(dataUrl, 'data_url'); 
+      const downloadUrl = await snapshot.ref.getDownloadURL();  
+      return downloadUrl;
+    } catch (error) {
+      console.error("Error al subir la imagen:", error);
+      throw error;
+    }
+  }
+  
   
 }
